@@ -3,35 +3,36 @@
 {% block extra_css %}
 <style>
 .auth-wrap {
-  max-width:440px;
-  margin:4rem auto;
+  max-width:420px;
+  margin:3rem auto;
+  padding:0 1rem;
 }
 .auth-logo {
   text-align:center;
-  margin-bottom:2.5rem;
+  margin-bottom:2rem;
 }
 .auth-logo h2 {
   font-family:'Playfair Display',serif;
-  font-size:2.4rem;
-  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  font-size:2.2rem;
+  background:var(--gradient-3);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 .auth-logo p {
   color:var(--text-muted);
-  font-size:15px;
+  font-size:14px;
   margin-top:8px;
 }
 .auth-footer {
   text-align:center;
   margin-top:1.5rem;
-  font-size:14px;
+  font-size:13px;
   color:var(--text-muted);
 }
 .auth-footer a {
   color:var(--accent);
   text-decoration:none;
-  font-weight:600;
+  font-weight:700;
 }
 .auth-footer a:hover {
   text-decoration:underline;
@@ -39,7 +40,7 @@
 .divider {
   height:1px;
   background:var(--border);
-  margin:1.8rem 0;
+  margin:1.5rem 0;
   position:relative;
 }
 .divider span {
@@ -49,9 +50,40 @@
   transform:translate(-50%,-50%);
   background:var(--bg-card);
   padding:0 14px;
-  font-size:12px;
+  font-size:11px;
   color:var(--text-muted);
-  font-weight:500;
+  font-weight:600;
+}
+.social-btn {
+  width:100%;
+  padding:14px;
+  border-radius:16px;
+  border:1.5px solid var(--border);
+  background:var(--bg-elevated);
+  color:var(--text);
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  transition:all 0.2s;
+  margin-bottom:0.8rem;
+  -webkit-user-select:none;
+  user-select:none;
+  touch-action:manipulation;
+}
+.social-btn:active {
+  transform:scale(0.96);
+}
+.social-btn:hover {
+  border-color:var(--accent);
+  background:rgba(255,45,120,0.05);
+}
+@media (max-width:480px) {
+  .auth-wrap { margin:2rem auto }
+  .auth-logo h2 { font-size:1.8rem }
 }
 </style>
 {% endblock %}
@@ -62,7 +94,14 @@
     <p>Войдите, чтобы проголосовать</p>
   </div>
   <div class="card">
-    <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.8rem;color:var(--text)">Вход в аккаунт</h3>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:1.5rem;color:var(--text)">Вход в аккаунт</h3>
+
+    <button class="social-btn" onclick="alert('Instagram login coming soon!')">
+      <span style="font-size:18px">&#128247;</span> Войти через Instagram
+    </button>
+
+    <div class="divider"><span>или</span></div>
+
     <form method="POST">
       <div class="form-group">
         <label>Имя пользователя</label>
