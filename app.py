@@ -108,8 +108,8 @@ def login_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         if 'user_id' not in session:
-            flash('Необходимо войти в аккаунт', 'error')
-            return redirect(url_for('login'))
+            flash('Для голосования необходимо зарегистрироваться', 'info')
+            return redirect(url_for('register'))
         return f(*args, **kwargs)
     return decorated
 
