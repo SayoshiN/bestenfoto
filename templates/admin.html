@@ -4,153 +4,232 @@
 <style>
 .admin-hero {
   text-align:center;
-  padding:2.5rem 1rem 2rem;
-  background:linear-gradient(135deg,rgba(255,107,138,0.08) 0%,rgba(107,138,255,0.08) 100%);
-  border-radius:24px;
-  margin-bottom:2.5rem;
+  padding:2rem 1rem 1.5rem;
+  background:linear-gradient(135deg, rgba(255,45,120,0.08) 0%, rgba(107,76,255,0.08) 100%);
+  border-radius:28px;
+  margin-bottom:2rem;
   border:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+.admin-hero::before {
+  content:'';
+  position:absolute;
+  width:300px; height:300px;
+  background:radial-gradient(circle, rgba(255,45,120,0.08), transparent 70%);
+  top:-80px; right:-80px;
+  pointer-events:none;
 }
 .admin-hero h1 {
   font-family:'Playfair Display',serif;
-  font-size:2rem;
+  font-size:1.8rem;
   color:var(--text);
-  margin-bottom:0.5rem;
+  margin-bottom:0.4rem;
+  position:relative;
+  z-index:1;
 }
 .admin-hero p {
   color:var(--text-muted);
-  font-size:14px;
+  font-size:13px;
+  position:relative;
+  z-index:1;
 }
 .login-card {
   max-width:400px;
-  margin:3rem auto;
+  margin:2rem auto;
   text-align:center;
 }
 .login-card .lock-icon {
   font-size:3rem;
   margin-bottom:1rem;
   display:block;
+  filter:drop-shadow(0 4px 12px rgba(255,45,120,0.3));
 }
 .admin-grid {
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:1.5rem;
-  margin-bottom:2rem;
+  gap:1rem;
+  margin-bottom:1.5rem;
 }
 .section-h {
   font-family:'Playfair Display',serif;
-  font-size:1.3rem;
-  margin-bottom:1.2rem;
-  padding-bottom:0.6rem;
+  font-size:1.2rem;
+  margin-bottom:1rem;
+  padding-bottom:0.5rem;
   border-bottom:1px solid var(--border);
   color:var(--text);
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 .photo-grid {
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(80px,1fr));
-  gap:10px;
+  grid-template-columns:repeat(auto-fill, minmax(70px, 1fr));
+  gap:8px;
   margin-top:1rem;
 }
 .photo-thumb {
   width:100%;
   aspect-ratio:1;
-  border-radius:10px;
+  border-radius:12px;
   object-fit:cover;
   border:1px solid var(--border);
-  transition:transform 0.2s;
+  transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+  cursor:pointer;
+  -webkit-user-select:none;
+  user-select:none;
+  touch-action:manipulation;
+}
+.photo-thumb:active {
+  transform:scale(0.92);
 }
 .photo-thumb:hover {
-  transform:scale(1.05);
+  transform:scale(1.08);
   border-color:var(--accent);
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  z-index:2;
 }
 .cand-admin-list {
   display:flex;
   flex-direction:column;
-  gap:0.8rem;
+  gap:0.7rem;
 }
 .cand-admin-row {
   display:flex;
   align-items:center;
-  gap:1rem;
+  gap:0.8rem;
   background:var(--bg-elevated);
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:12px 16px;
-  transition:all 0.2s;
+  border-radius:18px;
+  padding:10px 14px;
+  transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
+  position:relative;
+  overflow:hidden;
+}
+.cand-admin-row:active {
+  transform:scale(0.98);
 }
 .cand-admin-row:hover {
-  border-color:rgba(255,107,138,0.2);
+  border-color:rgba(255,45,120,0.15);
+  transform:translateX(3px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.15);
 }
 .cand-admin-thumb {
-  width:48px;
-  height:48px;
-  border-radius:10px;
+  width:44px;
+  height:44px;
+  border-radius:12px;
   object-fit:cover;
   background:var(--bg);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:1.5rem;
+  font-size:1.3rem;
   flex-shrink:0;
   border:1px solid var(--border);
 }
 .cand-admin-info {
   flex:1;
+  min-width:0;
 }
 .cand-admin-info strong {
-  font-size:15px;
+  font-size:14px;
   color:var(--text);
   display:block;
   margin-bottom:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 .cand-admin-info small {
   color:var(--text-muted);
-  font-size:12px;
+  font-size:11px;
   display:block;
 }
 .cand-admin-actions {
   display:flex;
-  gap:8px;
+  gap:6px;
   flex-shrink:0;
 }
 .alert-box {
-  background:rgba(251,191,36,0.08);
-  border:1px solid rgba(251,191,36,0.2);
-  border-radius:14px;
+  background:rgba(251,191,36,0.06);
+  border:1px solid rgba(251,191,36,0.15);
+  border-radius:18px;
   padding:1rem 1.2rem;
-  font-size:14px;
-  color:#fbbf24;
+  font-size:13px;
+  color:var(--warning);
   margin-bottom:1.5rem;
+  font-weight:600;
 }
 .danger-zone {
-  background:rgba(239,68,68,0.05);
-  border:1px solid rgba(239,68,68,0.15);
-  border-radius:20px;
+  background:rgba(239,68,68,0.04);
+  border:1px solid rgba(239,68,68,0.12);
+  border-radius:24px;
   padding:1.5rem;
   margin-top:1.5rem;
 }
 .danger-zone h4 {
   color:var(--danger);
-  font-size:13px;
+  font-size:11px;
   text-transform:uppercase;
-  letter-spacing:1px;
+  letter-spacing:2px;
   margin-bottom:1rem;
-  font-weight:700;
+  font-weight:800;
 }
 .stats-table {
   width:100%;
-  font-size:14px;
+  font-size:13px;
   border-collapse:collapse;
 }
 .stats-table td {
-  padding:8px 0;
+  padding:10px 0;
 }
 .stats-table td:first-child {
   color:var(--text-muted);
+  font-weight:500;
 }
 .stats-table td:last-child {
-  font-weight:700;
+  font-weight:800;
   color:var(--text);
   text-align:right;
+  font-size:14px;
+}
+.stats-table tr {
+  border-bottom:1px solid var(--border);
+}
+.stats-table tr:last-child {
+  border-bottom:none;
+}
+
+/* File input styling */
+input[type="file"] {
+  width:100%;
+  padding:12px;
+  border:1.5px dashed var(--border);
+  border-radius:16px;
+  background:var(--bg-elevated);
+  color:var(--text-muted);
+  font-size:13px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+input[type="file"]:hover {
+  border-color:var(--accent);
+  background:rgba(255,45,120,0.03);
+}
+
+@media (max-width:768px) {
+  .admin-hero { padding:1.5rem 1rem; border-radius:20px }
+  .admin-hero h1 { font-size:1.4rem }
+  .admin-grid { grid-template-columns:1fr; gap:0.8rem }
+  .cand-admin-row { padding:8px 12px; border-radius:14px }
+  .cand-admin-thumb { width:38px; height:38px; font-size:1.1rem }
+  .cand-admin-actions { flex-wrap:wrap }
+  .danger-zone { padding:1.2rem; border-radius:18px }
+  .photo-grid { grid-template-columns:repeat(auto-fill, minmax(60px, 1fr)) }
+}
+@media (max-width:480px) {
+  .cand-admin-actions .btn-sm { padding:6px 10px; font-size:11px }
+  .login-card { margin:1.5rem auto }
 }
 </style>
 {% endblock %}
@@ -164,8 +243,8 @@
 <!-- LOGIN FORM -->
 <div class="card login-card">
   <span class="lock-icon">&#128274;</span>
-  <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:0.5rem;color:var(--text)">Вход в админ-панель</h3>
-  <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.5rem">Введите пароль администратора</p>
+  <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:0.5rem;color:var(--text)">Вход в админ-панель</h3>
+  <p style="color:var(--text-muted);font-size:13px;margin-bottom:1.5rem">Введите пароль администратора</p>
   <form method="POST">
     <input type="hidden" name="action" value="login">
     <div class="form-group">
@@ -214,12 +293,12 @@
     {% if photos %}
       <div class="photo-grid">
         {% for p in photos %}
-        <img src="/static/photos/{{ p }}" alt="{{ p }}" class="photo-thumb" title="{{ p }}">
+        <img src="/static/photos/{{ p }}" alt="{{ p }}" class="photo-thumb" title="{{ p }}" loading="lazy">
         {% endfor %}
       </div>
-      <p style="font-size:12px;color:var(--text-muted);margin-top:1rem">{{ photos|length }} файл(ов) в папке <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px">static/photos/</code></p>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:1rem">{{ photos|length }} файл(ов) в папке <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px">static/photos/</code></p>
     {% else %}
-      <p style="color:var(--text-muted);font-size:14px">Папка пуста. Добавьте фотографии в <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px">static/photos/</code></p>
+      <p style="color:var(--text-muted);font-size:13px">Папка пуста. Добавьте фотографии в <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px">static/photos/</code></p>
     {% endif %}
   </div>
 </div>
@@ -260,7 +339,7 @@
     {% endfor %}
   </div>
   {% else %}
-  <p style="color:var(--text-muted);font-size:14px">Нет кандидатов. Добавьте первого!</p>
+  <p style="color:var(--text-muted);font-size:13px">Нет кандидатов. Добавьте первого!</p>
   {% endif %}
 </div>
 
@@ -276,7 +355,7 @@
   </div>
   <div class="danger-zone">
     <h4>&#9888; Опасная зона</h4>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem">Сброс удалит все голоса навсегда. Это действие необратимо.</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:1rem">Сброс удалит все голоса навсегда. Это действие необратимо.</p>
     <form method="POST" onsubmit="return confirm('Сбросить ВСЕ голоса?')">
       <input type="hidden" name="action" value="reset_votes">
       <button type="submit" class="btn btn-danger">&#128465; Сбросить все голоса</button>
@@ -290,12 +369,12 @@
   <div class="cand-admin-list">
     {% for u in users %}
     <div class="cand-admin-row">
-      <div class="cand-admin-thumb" style="font-size:1.2rem">{{ u.username[0]|upper }}</div>
+      <div class="cand-admin-thumb" style="font-size:1.1rem">{{ u.username[0]|upper }}</div>
       <div class="cand-admin-info">
         <strong>{{ u.username }}</strong>
         <small>
           {{ u.email }} &nbsp;|&nbsp; 
-          <span style="color:var(--warning);font-weight:600">&#128273; Пароль: {{ u.password }}</span>
+          <span style="color:var(--warning);font-weight:700">&#128273; {{ u.password }}</span>
           &nbsp;|&nbsp;
           {% if u.voted_for %}
             <span style="color:var(--accent)">&#10003; Голосовал за: {{ u.voted_for_name }}</span>
