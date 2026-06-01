@@ -632,7 +632,7 @@
 <div class="auth-banner">
   <p>&#128293; Чтобы проголосовать, войдите в аккаунт или зарегистрируйтесь — это бесплатно!</p>
   <div class="auth-banner-btns">
-    <a href="/login" class="btn btn-rose">Войти</a>
+    <a href="/register" class="btn btn-rose">Войти</a>
     <a href="/register" class="btn btn-outline">Создать аккаунт</a>
   </div>
 </div>
@@ -678,7 +678,7 @@
           </button>
         </form>
       {% else %}
-        <a href="/login" class="vote-btn {{ 'vote-btn-a' if loop.index == 1 else 'vote-btn-b' }}" style="display:flex;text-decoration:none">&#128274; Войти и голосовать</a>
+        <a href="/register" class="vote-btn {{ 'vote-btn-a' if loop.index == 1 else 'vote-btn-b' }}" style="display:flex;text-decoration:none">&#128274; Войти и голосовать</a>
       {% endif %}
     </div>
   </div>
