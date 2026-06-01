@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+{% block title %}Статистика — BestenFoto{% endblock %}
+{% block extra_css %}
+<style>
+.stats-hero {
+  text-align:center;
+  padding:3rem 1rem 2rem;
+  background:linear-gradient(135deg,rgba(107,138,255,0.08) 0%,rgba(255,107,138,0.08) 100%);
+  border-radius:24px;
+  margin-bottom:2.5rem;
+  border:1px solid var(--border);
+}
+.stats-hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;
+  color:var(--text);
+  margin-bottom:0.5rem;
+}
+.stats-hero p {
+  color:var(--text-muted);
+  font-size:15px;
+}
+.leaderboard {
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  margin-bottom:2.5rem;
+}
+.leader-row {
+  display:flex;
+  align-items:center;
+  gap:1.2rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.2rem 1.5rem;
+  transition:all 0.2s;
+}
+.leader-row:hover {
+  border-color:rgba(255,107,138,0.2);
+  transform:translateX(4px);
+}
+.leader-rank {
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  background:var(--bg-elevated);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:14px;
+  color:var(--text-muted);
+  flex-shrink:0;
+}
+.leader-rank.gold {
+  background:linear-gradient(135deg,#fbbf24,#f59e0b);
+  color:#1a1a2e;
+}
+.leader-rank.silver {
+  background:linear-gradient(135deg,#e5e7eb,#9ca3af);
+  color:#1a1a2e;
+}
+.leader-rank.bronze {
+  background:linear-gradient(135deg,#fdba74,#ea580c);
+  color:#1a1a2e;
+}
+.leader-info {
+  flex:1;
+}
+.leader-name {
+  font-weight:700;
+  font-size:15px;
+  color:var(--text);
+  margin-bottom:2px;
+}
+.leader-tag {
+  font-size:12px;
+  color:var(--text-muted);
+}
+.leader-bar-wrap {
+  width:200px;
+  margin-right:1rem;
+}
+.leader-bar {
+  height:8px;
+  border-radius:8px;
+  background:var(--bg-elevated);
+  overflow:hidden;
+}
+.leader-bar-fill {
+  height:100%;
+  border-radius:8px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  transition:width 0.8s ease;
+}
+.leader-votes {
+  text-align:right;
+  min-width:80px;
+}
+.leader-votes .num {
+  font-size:1.3rem;
+  font-weight:800;
+  color:var(--text);
+}
+.leader-votes .label {
+  font-size:11px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.recent-votes {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:1.5rem;
+}
+.recent-votes h3 {
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;
+  margin-bottom:1.2rem;
+  color:var(--text);
+}
+.vote-item {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0.8rem 0;
+  border-bottom:1px solid var(--border);
+}
+.vote-item:last-child {
+  border-bottom:none;
+}
+.vote-user {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.vote-avatar {
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff;
+  font-weight:700;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.vote-name {
+  font-weight:600;
+  font-size:14px;
+  color:var(--text);
+}
+.vote-candidate {
+  font-size:13px;
+  color:var(--accent);
+  font-weight:600;
+}
+.vote-time {
+  font-size:12px;
+  color:var(--text-muted);
+}
+.empty-state {
+  text-align:center;
+  padding:3rem;
+  color:var(--text-muted);
+}
+.empty-state .icon {
+  font-size:3rem;
+  margin-bottom:1rem;
+  display:block;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="stats-hero">
+  <h1>&#128202; Статистика голосования</h1>
+  <p>Результаты в реальном времени • {{ total_votes }} голосов • {{ total_users }} участников</p>
+</div>
+
+{% if candidates %}
+<div class="leaderboard">
+  {% for c in candidates %}
+  {% set max_votes = candidates|map(attribute='vote_count')|max %}
+  {% set bar_pct = (c.vote_count / max_votes * 100) if max_votes else 0 %}
+  <div class="leader-row">
+    <div class="leader-rank {% if loop.index == 1 %}gold{% elif loop.index == 2 %}silver{% elif loop.index == 3 %}bronze{% endif %}">
+      {{ loop.index }}
+    </div>
+    <div class="leader-info">
+      <div class="leader-name">{{ c.name }}</div>
+      <div class="leader-tag">{{ c.tagline or 'Кандидат' }}</div>
+    </div>
+    <div class="leader-bar-wrap">
+      <div class="leader-bar">
+        <div class="leader-bar-fill" style="width:{{ bar_pct }}%"></div>
+      </div>
+    </div>
+    <div class="leader-votes">
+      <div class="num">{{ c.vote_count }}</div>
+      <div class="label">голосов</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <span class="icon">&#128532;</span>
+  <p>Пока нет кандидатов</p>
+</div>
+{% endif %}
+
+<div class="recent-votes">
+  <h3>&#128336; Последние голоса</h3>
+  {% if recent %}
+    {% for r in recent %}
+    <div class="vote-item">
+      <div class="vote-user">
+        <div class="vote-avatar">{{ r.username[0]|upper }}</div>
+        <div>
+          <div class="vote-name">{{ r.username }}</div>
+        </div>
+      </div>
+      <div class="vote-candidate">{{ r.candidate_name }}</div>
+      <div class="vote-time">{{ r.voted_at[:16].replace('T',' ') }}</div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <span class="icon">&#128172;</span>
+      <p>Пока никто не голосовал</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Войти — BestenFoto{% endblock %}
+{% block extra_css %}
+<style>
+.auth-wrap {
+  max-width:440px;
+  margin:4rem auto;
+}
+.auth-logo {
+  text-align:center;
+  margin-bottom:2.5rem;
+}
+.auth-logo h2 {
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.auth-logo p {
+  color:var(--text-muted);
+  font-size:15px;
+  margin-top:8px;
+}
+.auth-footer {
+  text-align:center;
+  margin-top:1.5rem;
+  font-size:14px;
+  color:var(--text-muted);
+}
+.auth-footer a {
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:600;
+}
+.auth-footer a:hover {
+  text-decoration:underline;
+}
+.divider {
+  height:1px;
+  background:var(--border);
+  margin:1.8rem 0;
+  position:relative;
+}
+.divider span {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:var(--bg-card);
+  padding:0 14px;
+  font-size:12px;
+  color:var(--text-muted);
+  font-weight:500;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <div class="auth-logo">
+    <h2>&#9829; BestenFoto</h2>
+    <p>Войдите, чтобы проголосовать</p>
+  </div>
+  <div class="card">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.8rem;color:var(--text)">Вход в аккаунт</h3>
+    <form method="POST">
+      <div class="form-group">
+        <label>Имя пользователя</label>
+        <input type="text" name="username" placeholder="Введите имя" required autofocus>
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" name="password" placeholder="Введите пароль" required>
+      </div>
+      <button type="submit" class="btn btn-rose" style="width:100%;margin-top:0.5rem">Войти &#9829;</button>
+    </form>
+  </div>
+  <p class="auth-footer">Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+</div>
+{% endblock %}

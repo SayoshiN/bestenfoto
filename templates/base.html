@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}BestenFoto{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f1a;
+  --bg-elevated: #16162a;
+  --bg-card: #1e1e3a;
+  --border: rgba(255,255,255,0.06);
+  --text: #e8e8f0;
+  --text-muted: #8a8aa3;
+  --accent: #ff6b8a;
+  --accent-glow: rgba(255,107,138,0.15);
+  --accent-2: #6b8aff;
+  --accent-2-glow: rgba(107,138,255,0.15);
+  --success: #4ade80;
+  --danger: #f87171;
+  --warning: #fbbf24;
+}
+* { box-sizing:border-box; margin:0; padding:0 }
+html { scroll-behavior:smooth }
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* NAV */
+nav {
+  background:rgba(15,15,26,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:70px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.nav-logo {
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;
+  color:var(--accent);
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+}
+.nav-logo span {
+  animation:pulse 2s ease-in-out infinite;
+  display:inline-block;
+}
+@keyframes pulse {
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.15);opacity:0.8}
+}
+.nav-links {
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.nav-links a {
+  text-decoration:none;
+  color:var(--text-muted);
+  font-size:14px;
+  font-weight:500;
+  padding:8px 16px;
+  border-radius:10px;
+  transition:all 0.2s;
+}
+.nav-links a:hover {
+  color:var(--text);
+  background:rgba(255,255,255,0.05);
+}
+.nav-links .btn-nav {
+  background:linear-gradient(135deg,var(--accent),#ff8fab);
+  color:#fff !important;
+  padding:10px 22px;
+  border-radius:12px;
+  font-weight:600;
+  box-shadow:0 4px 20px var(--accent-glow);
+}
+.nav-links .btn-nav:hover {
+  transform:translateY(-1px);
+  box-shadow:0 6px 28px var(--accent-glow);
+}
+.nav-user {
+  font-size:13px;
+  color:var(--text-muted);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-right:8px;
+}
+.nav-avatar {
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff;
+  font-weight:700;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 2px 12px var(--accent-glow);
+}
+
+/* FLASH */
+.flashes {
+  position:fixed;
+  top:82px;
+  right:1.5rem;
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-width:380px;
+}
+.flash {
+  padding:14px 20px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:500;
+  animation:slideIn 0.35s cubic-bezier(0.16,1,0.3,1);
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+  border:1px solid;
+}
+.flash.success {
+  background:rgba(74,222,128,0.1);
+  color:var(--success);
+  border-color:rgba(74,222,128,0.2);
+}
+.flash.error {
+  background:rgba(248,113,113,0.1);
+  color:var(--danger);
+  border-color:rgba(248,113,113,0.2);
+}
+@keyframes slideIn {
+  from{transform:translateX(120%) scale(0.9);opacity:0}
+  to{transform:translateX(0) scale(1);opacity:1}
+}
+
+/* MAIN */
+main {
+  padding:2.5rem 1.5rem;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+/* CARD */
+.card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;
+  box-shadow:0 4px 24px rgba(0,0,0,0.2);
+}
+
+/* FORM */
+.form-group {
+  margin-bottom:1.4rem;
+}
+.form-group label {
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:var(--text-muted);
+  margin-bottom:8px;
+  text-transform:uppercase;
+  letter-spacing:0.8px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width:100%;
+  padding:13px 16px;
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  font-size:15px;
+  font-family:inherit;
+  background:var(--bg-elevated);
+  color:var(--text);
+  outline:none;
+  transition:all 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-glow);
+}
+.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:13px 26px;
+  border-radius:12px;
+  font-family:inherit;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  border:none;
+  transition:all 0.2s;
+  text-decoration:none;
+  position:relative;
+  overflow:hidden;
+}
+.btn::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,transparent,rgba(255,255,255,0.15),transparent);
+  transform:translateX(-100%);
+  transition:transform 0.5s;
+}
+.btn:hover::before {
+  transform:translateX(100%);
+}
+.btn-rose {
+  background:linear-gradient(135deg,var(--accent),#ff8fab);
+  color:#fff;
+  box-shadow:0 4px 20px var(--accent-glow);
+}
+.btn-rose:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px var(--accent-glow);
+}
+.btn-outline {
+  background:transparent;
+  border:1.5px solid var(--border);
+  color:var(--text-muted);
+}
+.btn-outline:hover {
+  border-color:var(--accent);
+  color:var(--accent);
+  background:rgba(255,107,138,0.05);
+}
+.btn-blue {
+  background:linear-gradient(135deg,var(--accent-2),#8fabff);
+  color:#fff;
+  box-shadow:0 4px 20px var(--accent-2-glow);
+}
+.btn-blue:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px var(--accent-2-glow);
+}
+.btn-sm {
+  padding:8px 16px;
+  font-size:13px;
+}
+.btn-danger {
+  background:linear-gradient(135deg,#ef4444,#f87171);
+  color:#fff;
+  box-shadow:0 4px 20px rgba(239,68,68,0.2);
+}
+.btn-danger:hover {
+  transform:translateY(-2px);
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;
+  color:var(--text);
+  margin-bottom:0.5rem;
+  background:linear-gradient(135deg,var(--text),var(--text-muted));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.section-sub {
+  color:var(--text-muted);
+  font-size:15px;
+  margin-bottom:2.5rem;
+}
+
+/* BADGE */
+.badge {
+  display:inline-block;
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:600;
+  border:1px solid;
+}
+.badge-rose {
+  background:rgba(255,107,138,0.1);
+  color:var(--accent);
+  border-color:rgba(255,107,138,0.2);
+}
+.badge-blue {
+  background:rgba(107,138,255,0.1);
+  color:var(--accent-2);
+  border-color:rgba(107,138,255,0.2);
+}
+
+/* FOOTER */
+footer {
+  text-align:center;
+  padding:3rem 2rem;
+  color:var(--text-muted);
+  font-size:13px;
+  border-top:1px solid var(--border);
+  margin-top:4rem;
+  background:var(--bg-elevated);
+}
+footer a {
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:500;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width:8px }
+::-webkit-scrollbar-track { background:var(--bg) }
+::-webkit-scrollbar-thumb { background:var(--bg-card); border-radius:4px }
+::-webkit-scrollbar-thumb:hover { background:var(--text-muted) }
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+  nav { padding:0 1rem; height:60px }
+  .nav-logo { font-size:1.2rem }
+  .nav-links a { padding:6px 10px; font-size:13px }
+  main { padding:1.5rem 1rem }
+  .section-title { font-size:1.6rem }
+}
+</style>
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">BestenFoto <span>&#9829;</span></a>
+  <div class="nav-links">
+    <a href="/">Голосование</a>
+    <a href="/stats">Статистика</a>
+    <a href="/admin">Админ</a>
+    {% if session.user_id %}
+      <div class="nav-user">
+        <div class="nav-avatar">{{ session.username[0]|upper }}</div>
+        <span>{{ session.username }}</span>
+      </div>
+      <a href="/logout">Выйти</a>
+    {% else %}
+      <a href="/login">Войти</a>
+      <a href="/register" class="btn-nav">Регистрация</a>
+    {% endif %}
+  </div>
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="flashes">
+    {% for cat, msg in messages %}
+    <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+  </div>
+  <script>setTimeout(()=>{document.querySelector('.flashes')?.remove()},4000)</script>
+  {% endif %}
+{% endwith %}
+
+<main>{% block content %}{% endblock %}</main>
+
+<footer>
+  <p>&#9829; BestenFoto — голосование за лучшее фото &nbsp;|&nbsp; <a href="/admin">Управление</a> &nbsp;|&nbsp; <a href="/stats">Статистика</a></p>
+</footer>
+</body>
+</html>
